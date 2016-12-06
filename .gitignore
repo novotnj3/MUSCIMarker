@@ -30,6 +30,10 @@ var/
 *.manifest
 *.spec
 
+# Buildozer packaging
+!buildozer.spec
+.buildozer
+
 # Installer logs
 pip-log.txt
 pip-delete-this-directory.txt
