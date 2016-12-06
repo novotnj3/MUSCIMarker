@@ -211,7 +211,7 @@ import cPickle
 # Importing skimage.io causes strange behavior on loading. Maybe bad interaction with some libraries?
 # skimage by itself is fine.
 import datetime
-import scipy.misc   # This worked!
+import imutils
 
 from kivy._event import EventDispatcher
 from kivy.app import App
@@ -1063,13 +1063,8 @@ class MUSCIMarkerApp(App):
             return
 
         try:
-            # img = bb.load_rgb(pos)
-            #logging.warn('App: skimage available imread plugins: {0}'.format(find_available_plugins()))
-            img = scipy.misc.imread(pos, mode='L')
-            #img = cv2.imread(pos)
-            #img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+            img = imutils.load_image_gray(pos)
             logging.warn('App: Image dtype: {0}, min: {1}, max: {2}'.format(img.dtype, img.min(), img.max()))
-            # img = bb.load_grayscale(pos)
         except:
             logging.info('App: Loading image from file \'{0}\' failed.'
                          ''.format(pos))

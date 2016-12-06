@@ -6,7 +6,7 @@ import os
 import uuid
 from time import time
 
-import scipy.misc
+import imutils
 
 from kivy.app import App
 from kivy.core.window import Window
@@ -761,7 +761,7 @@ class CropObjectView(SelectableView, ToggleButton):
         fname = unicode(uuid.uuid4()) + '.png'
         full_path = os.path.join(tmp_dir, fname)
 
-        scipy.misc.imsave(full_path, combined_crop, )
+        imutils.save_image(full_path, combined_crop)
 
         # Make popup with the crop
         popup = InspectionPopup(title='Inspecting obj. {0}'.format(self.objid),
