@@ -8,7 +8,8 @@ Documentation: http://muscimarker.readthedocs.io/en/latest/
 
 * Python 2.7.11 and later (not 3)
 * Kivy
-* numpy, scipy
+* numpy
+* PIL (Pillow)
 * lxml
 * skimage
 
