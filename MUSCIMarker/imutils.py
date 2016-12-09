@@ -2,6 +2,7 @@
 This module implements several functions for manipulation with images.
 """
 
+import logging
 import numpy as np
 from PIL import Image
 
@@ -31,7 +32,8 @@ def _image_to_uint8(image):
     """
     Transforms an image represented by a NumPy array (possibly with float
     values) into the corresponding uint8 representation.
-    :param image: The input image array to be transformed.
+    :param image: The input image array to be transformed with non-negative
+    values.
     :return: The NumPy array of uint8 representing the input image.
     """
     assert type(image) is np.ndarray, 'Not a valid NumPy array!'
@@ -41,10 +43,20 @@ def _image_to_uint8(image):
         return image
 
     if np.issubdtype(image.dtype, np.float):
-        if image.min() < 0 or image.max() > 1:
-            raise ValueError('Image values are not in the range [0, 1]!')
+        i_min, i_max = image.min(), image.max()
 
-        # Perform the conversion
+        if i_min < 0:
+            raise ValueError('Negative image values are not allowed!')
+
+        if i_max == i_min:
+            intensity = 1.0 if i_min > 0 else 0.0
+            image.fill(intensity)
+            logging.warning('Image to uint8: image.max() == image.min()')
+        else:
+            # Linear normalization to [0, 1] range
+            image = (image - i_min) / (i_max - i_min)
+
+        # Conversion to uint8
         return (255 * image).astype(np.uint8)
 
     else:
