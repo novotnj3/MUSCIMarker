@@ -9,7 +9,7 @@ import logging
 import os
 
 import numpy
-from lxml import etree
+import xml.etree.ElementTree as ET
 
 logger = logging.getLogger(__name__)
 
@@ -776,7 +776,7 @@ def parse_cropobject_list(filename, with_refs=False, tolerate_ref_absence=True,
     """
     logging.info('Parsing CropObjectList, with_refs={0}, tolerate={1}.'
                  ''.format(with_refs, tolerate_ref_absence))
-    tree = etree.parse(filename)
+    tree = ET.parse(filename)
     root = tree.getroot()
     logging.info('XML parsed.')
     cropobject_list = []
@@ -956,7 +956,7 @@ def position_cropobject_list_by_muscimage(cropobject_list, muscimage):
 def parse_mlclass_list(filename):
     """From a xml file with a MLClassList as the top element,
     """
-    tree = etree.parse(filename)
+    tree = ET.parse(filename)
     root = tree.getroot()
     mlclass_list = []
     for mlclass in root.iter('MLClass'):
