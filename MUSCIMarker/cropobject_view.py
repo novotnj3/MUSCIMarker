@@ -768,7 +768,11 @@ class CropObjectView(SelectableView, ToggleButton):
                                 source=full_path)
 
         # Bind to delete the temp file on cancel()
-        popup.bind(on_dismiss=lambda x: os.unlink(full_path))
+        def __safe_unlink(fname):
+            if os.path.exists(full_path):
+                os.unlink(full_path)
+
+        popup.bind(on_dismiss=lambda x: __safe_unlink(x))
         popup.open()
 
     ##########################################################################
@@ -816,6 +820,12 @@ class CropObjectView(SelectableView, ToggleButton):
         containing this view."""
         if self.is_selected:
             self.dispatch('do_release')
+
+    def ensure_selected(self):
+        """Proper selection that will be reflected in a ListAdapter
+        containing this view."""
+        if not self.is_selected:
+            self.dispatch('on_release')
 
     def select_from_composite(self, *args):
         self.background_color = self.selected_color
