@@ -8,7 +8,7 @@ import numpy
 import time
 
 from kivy.app import App
-from skimage.draw import polygon, line
+from skimage_wrapper import polygon, line
 
 # DEBUG
 # import matplotlib.pyplot as plt

@@ -7,8 +7,7 @@ from math import floor, ceil
 import os
 
 import numpy
-import skimage.measure
-from skimage.draw import line
+from skimage_wrapper import line, label
 
 from kivy.core.window import Window
 from kivy.properties import ObjectProperty, StringProperty, BooleanProperty, NumericProperty
@@ -417,7 +416,7 @@ def connected_components2bboxes(labels):
 
 
 def compute_connected_components(image):
-    labels = skimage.measure.label(image, background=0)
+    labels = label(image, background=0)
     cc = int(labels.max())
     bboxes = connected_components2bboxes(labels)
     return cc, labels, bboxes
