@@ -13,7 +13,7 @@ package.domain = cz.mff
 source.dir = ../MUSCIMarker/
 
 # (list) Source files to include (let empty to include all the files)
-source.include_exts = py,png,xml,jpg,kv,atlas,deprules,pkl
+source.include_exts = py,png,xml,jpg,kv,atlas,deprules,pkl,json
 
 # (list) List of inclusions using pattern matching
 # Buildozer does not include hidden files, recovery and tmp directories will be added manually
