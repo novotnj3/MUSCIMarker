@@ -723,6 +723,12 @@ class MUSCIMarkerApp(App):
     def _get_recovery_path(self):
         conf = self.config
         recovery_dir = conf.get('recovery', 'recovery_dir')
+
+        # Make sure the recovery directory exists (Android)
+        if not os.path.isdir(recovery_dir):
+            logging.info('Creating recovery dir: {0}'.format(recovery_dir))
+            os.mkdir(recovery_dir)
+
         recovery_fname = conf.get('recovery', 'recovery_filename')
         recovery_path = os.path.join(recovery_dir, recovery_fname)
         return recovery_path
@@ -1719,7 +1725,14 @@ class MUSCIMarkerApp(App):
     # Temporary files
     @property
     def tmp_dir(self):
-        return os.path.join(os.path.dirname(__file__), 'tmp')
+        _tmp_dir = os.path.join(os.path.dirname(__file__), 'tmp')
+
+        # Create directory if it does not exist (Android)
+        if not os.path.isdir(_tmp_dir):
+            logging.info('Creating tmp dir: {0}'.format(_tmp_dir))
+            os.mkdir(_tmp_dir)
+
+        return _tmp_dir
 
     def clean_tmp_dir(self):
         tmp_dir = self.tmp_dir
