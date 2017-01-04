@@ -221,6 +221,7 @@ from kivy.uix.relativelayout import RelativeLayout
 from kivy.uix.scatterlayout import ScatterLayout
 from kivy.uix.togglebutton import ToggleButton
 from kivy.uix.widget import Widget
+from kivy.utils import platform
 
 import muscimarker_io
 from mlclass_selection import MLClassSelectionDialog
@@ -1783,7 +1784,11 @@ class MUSCIMarkerApp(App):
         return os.path.join(self._tracking_root, day_tag)
 
     def _get_default_tracking_root_dir(self):
-        home = os.path.expanduser('~') #os.environ['HOME']
+        if platform == 'android':
+            home = getattr(self, 'user_data_dir')
+        else:
+            home = os.path.expanduser('~')
+
         muscimarker_tracking_user_dir = '.muscimarker-tracking'
         return os.path.join(home, muscimarker_tracking_user_dir)
 
