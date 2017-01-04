@@ -1721,6 +1721,10 @@ class MUSCIMarkerApp(App):
 
         self.stop()
 
+    def on_stop(self):
+        # Prevent App crash when exiting on Android
+        Window.close()
+
     ##########################################################################
     # Temporary files
     @property
